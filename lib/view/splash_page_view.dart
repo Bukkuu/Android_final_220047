@@ -1,15 +1,41 @@
 import 'package:flutter/material.dart';
 
-class SplashPageView extends StatelessWidget {
+import 'login_page_view.dart';
+
+class SplashPageView extends StatefulWidget {
   const SplashPageView({super.key});
+
+  @override
+  State<SplashPageView> createState() => _SplashPageViewState();
+}
+
+class _SplashPageViewState extends State<SplashPageView> {
+  bool _animateImage = false;
+
+  @override
+  void initState() {
+    super.initState();
+    // Start the animation after a slight delay
+    Future.delayed(const Duration(milliseconds: 500), () {
+      setState(() {
+        _animateImage = true;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: [
-          // Background Image
-          Positioned.fill(
+          // Animated Background Image
+          AnimatedPositioned(
+            top: _animateImage ? 0 : -MediaQuery.of(context).size.height,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            duration: const Duration(seconds: 1),
+            curve: Curves.easeInOut,
             child: Image.asset(
               'assets/images/9.jpeg',
               fit: BoxFit.cover,
@@ -25,7 +51,8 @@ class SplashPageView extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: Colors.black,
+                    fontFamily: 'Montserrat-Bold', // Specify the custom font
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -59,233 +86,6 @@ class SplashPageView extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class LoginPageView extends StatelessWidget {
-  const LoginPageView({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.brown[100],
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const Text(
-              'Login to Gemsera',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
-                color: Color.fromARGB(255, 193, 127, 29),
-              ),
-            ),
-            const SizedBox(height: 40),
-            TextField(
-              decoration: InputDecoration(
-                labelText: 'Email',
-                prefixIcon: const Icon(Icons.email),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-              ),
-              keyboardType: TextInputType.emailAddress,
-            ),
-            const SizedBox(height: 20),
-            TextField(
-              decoration: InputDecoration(
-                labelText: 'Password',
-                prefixIcon: const Icon(Icons.lock),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-              ),
-              obscureText: true,
-            ),
-            const SizedBox(height: 30),
-            ElevatedButton(
-              onPressed: () {
-                // Handle login action
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const MainPage()),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color.fromARGB(255, 193, 127, 29),
-                padding: const EdgeInsets.symmetric(vertical: 15),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-              ),
-              child: const Text(
-                'Login',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-            const SizedBox(height: 15),
-            TextButton(
-              onPressed: () {
-                // Navigate to RegisterPageView
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const RegisterPageView()),
-                );
-              },
-              child: const Text(
-                'Don’t have an account? Register',
-                style: TextStyle(color: Color.fromARGB(255, 193, 127, 29)),
-              ),
-            ),
-            const SizedBox(height: 15),
-            TextButton(
-              onPressed: () {
-                // Handle forgot password action
-              },
-              child: const Text(
-                'Forgot Password?',
-                style: TextStyle(color: Color.fromARGB(255, 193, 127, 29)),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class RegisterPageView extends StatelessWidget {
-  const RegisterPageView({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.brown[100],
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const Text(
-              'Create an Account',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
-                color: Color.fromARGB(255, 193, 127, 29),
-              ),
-            ),
-            const SizedBox(height: 40),
-            TextField(
-              decoration: InputDecoration(
-                labelText: 'Full Name',
-                prefixIcon: const Icon(Icons.person),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-              ),
-            ),
-            const SizedBox(height: 20),
-            TextField(
-              decoration: InputDecoration(
-                labelText: 'Email',
-                prefixIcon: const Icon(Icons.email),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-              ),
-              keyboardType: TextInputType.emailAddress,
-            ),
-            const SizedBox(height: 20),
-            TextField(
-              decoration: InputDecoration(
-                labelText: 'Password',
-                prefixIcon: const Icon(Icons.lock),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-              ),
-              obscureText: true,
-            ),
-            const SizedBox(height: 20),
-            TextField(
-              decoration: InputDecoration(
-                labelText: 'Confirm Password',
-                prefixIcon: const Icon(Icons.lock_outline),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-              ),
-              obscureText: true,
-            ),
-            const SizedBox(height: 30),
-            ElevatedButton(
-              onPressed: () {
-                // Handle registration action
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const MainPage()),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color.fromARGB(255, 193, 127, 29),
-                padding: const EdgeInsets.symmetric(vertical: 15),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-              ),
-              child: const Text(
-                'Register',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-            const SizedBox(height: 15),
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context); // Navigate back to login
-              },
-              child: const Text(
-                'Already have an account? Login',
-                style: TextStyle(color: Color.fromARGB(255, 193, 127, 29)),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class MainPage extends StatelessWidget {
-  const MainPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Gemsera - Earring Store'),
-      ),
-      body: const Center(
-        child: Text(
-          'Main Page Content Goes Here',
-          style: TextStyle(fontSize: 18),
-        ),
       ),
     );
   }

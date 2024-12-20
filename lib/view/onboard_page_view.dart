@@ -1,88 +1,167 @@
-// import 'package:flutter/material.dart';
-// import 'package:mobile_final_project/view/splash_page_view.dart';
+import 'package:flutter/material.dart';
 
-// class OnboardingPageView extends StatelessWidget {
-//   const OnboardingPageView({super.key});
+import 'splash_page_view.dart';
 
-//   @override
-//   Widget build(BuildContext context) {
-//     final List<Map<String, String>> onboardData = [
-//       {
-//         "image": "assets/images/1.jpeg",
-//         "title": "Welcome to Gemsera",
-//         "description": "Discover stunning earrings tailored for you.",
-//       },
-//       {
-//         "image": "assets/images/2.jpeg",
-//         "title": "Exclusive Designs",
-//         "description": "Browse through our exclusive and handcrafted designs.",
-//       },
-//       {
-//         "image": "assets/images/3.jpeg",
-//         "title": "Easy Shopping",
-//         "description": "Shop with ease and enjoy a seamless experience.",
-//       },
-//     ];
+class OnboardingPageView extends StatefulWidget {
+  const OnboardingPageView({super.key});
 
-//     return Scaffold(
-//       backgroundColor: Colors.brown[50],
-//       body: PageView.builder(
-//         itemCount: onboardData.length,
-//         itemBuilder: (context, index) {
-//           return Padding(
-//             padding: const EdgeInsets.all(20.0),
-//             child: Column(
-//               mainAxisAlignment: MainAxisAlignment.center,
-//               children: [
-//                 Image.asset(onboardData[index]["image"]!, height: 250),
-//                 const SizedBox(height: 20),
-//                 Text(
-//                   onboardData[index]["title"]!,
-//                   style: const TextStyle(
-//                     fontSize: 28,
-//                     fontWeight: FontWeight.bold,
-//                     color: Color.fromARGB(255, 193, 127, 29),
-//                   ),
-//                   textAlign: TextAlign.center,
-//                 ),
-//                 const SizedBox(height: 15),
-//                 Text(
-//                   onboardData[index]["description"]!,
-//                   style: const TextStyle(fontSize: 18, color: Colors.brown),
-//                   textAlign: TextAlign.center,
-//                 ),
-//                 if (index == onboardData.length - 1) const SizedBox(height: 30),
-//                 if (index == onboardData.length - 1)
-//                   ElevatedButton(
-//                     onPressed: () {
-//                       Navigator.pushReplacement(
-//                         context,
-//                         MaterialPageRoute(
-//                           builder: (context) => const SplashPage(),
-//                         ),
-//                       );
-//                     },
-//                     style: ElevatedButton.styleFrom(
-//                       backgroundColor: const Color.fromARGB(255, 193, 127, 29),
-//                       padding: const EdgeInsets.symmetric(vertical: 15),
-//                       shape: RoundedRectangleBorder(
-//                         borderRadius: BorderRadius.circular(8.0),
-//                       ),
-//                     ),
-//                     child: const Text(
-//                       'Get Started',
-//                       style: TextStyle(
-//                         fontSize: 18,
-//                         fontWeight: FontWeight.bold,
-//                         color: Colors.white,
-//                       ),
-//                     ),
-//                   ),
-//               ],
-//             ),
-//           );
-//         },
-//       ),
-//     );
-//   }
-// }
+  @override
+  State<OnboardingPageView> createState() => _OnboardingPageViewState();
+}
+
+class _OnboardingPageViewState extends State<OnboardingPageView> {
+  final PageController _pageController = PageController();
+  int _currentPage = 0;
+
+  final List<Map<String, String>> _onboardingData = [
+    {
+      'image': 'assets/images/1.jpeg',
+      'title': 'Discover Gems',
+      'description': 'Explore the best collections tailored for you.',
+    },
+    {
+      'image': 'assets/images/3.jpeg',
+      'title': 'Shop Seamlessly',
+      'description': 'Experience smooth and secure shopping.',
+    },
+    {
+      'image': 'assets/images/7.jpeg',
+      'title': 'Fast Delivery',
+      'description': 'Get your favorite items delivered swiftly.',
+    },
+  ];
+
+  void _onSkip() {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const SplashPageView()),
+    );
+  }
+
+  void _onNext() {
+    if (_currentPage == _onboardingData.length - 1) {
+      _onSkip();
+    } else {
+      _pageController.nextPage(
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Stack(
+        children: [
+          // Background images
+          PageView.builder(
+            controller: _pageController,
+            onPageChanged: (index) {
+              setState(() {
+                _currentPage = index;
+              });
+            },
+            itemCount: _onboardingData.length,
+            itemBuilder: (context, index) {
+              final data = _onboardingData[index];
+              return Image.asset(
+                data['image']!,
+                fit: BoxFit.cover,
+                width: double.infinity,
+                height: double.infinity,
+              );
+            },
+          ),
+          // Text content and navigation buttons
+          Positioned(
+            bottom: 100, // Adjusts position for text at the lower part
+            left: 20,
+            right: 20,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // Title
+                Text(
+                  _onboardingData[_currentPage]['title']!,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'Montserrat-Bold', // Montserrat-Bold
+                    color: Colors.black,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                // Description
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Text(
+                    _onboardingData[_currentPage]['description']!,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontFamily: 'Montserrat-Bold', // Montserrat-Bold
+                      color: Colors.black87,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          // Skip and Next buttons
+          Positioned(
+            bottom: 20,
+            left: 20,
+            right: 20,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                TextButton(
+                  onPressed: _onSkip,
+                  child: const Text(
+                    'Skip',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontFamily: 'Montserrat-Italic', // Montserrat-Italic
+                      color: Colors.black87,
+                    ),
+                  ),
+                ),
+                Row(
+                  children: List.generate(
+                    _onboardingData.length,
+                    (index) => Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 4),
+                      width: 8,
+                      height: 8,
+                      decoration: BoxDecoration(
+                        color: _currentPage == index
+                            ? Colors.black
+                            : Colors.black38,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                  ),
+                ),
+                TextButton(
+                  onPressed: _onNext,
+                  child: Text(
+                    _currentPage == _onboardingData.length - 1
+                        ? 'Finish'
+                        : 'Next',
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontFamily: 'Montserrat-Italic', // Montserrat-Italic
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

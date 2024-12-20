@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_final_project/view/splash_page_view.dart';
+import 'package:mobile_final_project/view/onboard_page_view.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       // home: HomePageView(),
 
       // home: LoginPageView(),
-      home: SplashPageView(),
+      home: OnboardingPageView(),
     );
   }
 }

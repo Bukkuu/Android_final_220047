@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'home_page_view.dart';
+import 'register_page_view.dart';
+
 class LoginPageView extends StatelessWidget {
   const LoginPageView({super.key});
 
@@ -13,12 +16,20 @@ class LoginPageView extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            Center(
+              child: Image.asset(
+                'assets/images/gemlogo.jpg',
+                height: 100,
+              ),
+            ),
+            const SizedBox(height: 20),
             const Text(
               'Login to Gemsera',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 28,
                 fontWeight: FontWeight.bold,
+                fontFamily: 'Montserrat-Bold', // Apply Montserrat-Bold font
                 color: Color.fromARGB(255, 193, 127, 29),
               ),
             ),
@@ -26,6 +37,10 @@ class LoginPageView extends StatelessWidget {
             TextField(
               decoration: InputDecoration(
                 labelText: 'Email',
+                labelStyle: const TextStyle(
+                  fontFamily:
+                      'Montserrat-Italic', // Apply Montserrat-Italic font
+                ),
                 prefixIcon: const Icon(Icons.email),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8.0),
@@ -37,6 +52,10 @@ class LoginPageView extends StatelessWidget {
             TextField(
               decoration: InputDecoration(
                 labelText: 'Password',
+                labelStyle: const TextStyle(
+                  fontFamily:
+                      'Montserrat-Italic', // Apply Montserrat-Italic font
+                ),
                 prefixIcon: const Icon(Icons.lock),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8.0),
@@ -47,10 +66,10 @@ class LoginPageView extends StatelessWidget {
             const SizedBox(height: 30),
             ElevatedButton(
               onPressed: () {
-                // Handle login action
-                Navigator.push(
+                // Navigate directly to HomePageView
+                Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => const MainPage()),
+                  MaterialPageRoute(builder: (context) => const HomePageView()),
                 );
               },
               style: ElevatedButton.styleFrom(
@@ -65,6 +84,7 @@ class LoginPageView extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
+                  fontFamily: 'Montserrat-Bold', // Apply Montserrat-Bold font
                   color: Colors.white,
                 ),
               ),
@@ -72,33 +92,22 @@ class LoginPageView extends StatelessWidget {
             const SizedBox(height: 15),
             TextButton(
               onPressed: () {
-                // Handle forgot password action
+                // Navigate to RegisterPageView
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const RegisterPageView()),
+                );
               },
               child: const Text(
-                'Forgot Password?',
-                style: TextStyle(color: Color.fromARGB(255, 193, 127, 29)),
+                'Don’t have an account? Register',
+                style: TextStyle(
+                  fontFamily: 'Montserrat-Italic', // Apply Montserrat-Bold font
+                  color: Color.fromARGB(255, 193, 127, 29),
+                ),
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class MainPage extends StatelessWidget {
-  const MainPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Gemsera - Earring Store'),
-      ),
-      body: const Center(
-        child: Text(
-          'Main Page Content Goes Here',
-          style: TextStyle(fontSize: 18),
         ),
       ),
     );

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_final_project/view/login_page_view.dart';
+
+import 'home_page_view.dart';
+import 'login_page_view.dart';
 
 class RegisterPageView extends StatelessWidget {
   const RegisterPageView({super.key});
@@ -14,12 +16,20 @@ class RegisterPageView extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            Center(
+              child: Image.asset(
+                'assets/images/gemlogo.jpg',
+                height: 100,
+              ),
+            ),
+            const SizedBox(height: 20),
             const Text(
               'Create an Account',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 28,
                 fontWeight: FontWeight.bold,
+                fontFamily: 'Montserrat-Bold', // Apply Montserrat-Bold font
                 color: Color.fromARGB(255, 193, 127, 29),
               ),
             ),
@@ -27,6 +37,10 @@ class RegisterPageView extends StatelessWidget {
             TextField(
               decoration: InputDecoration(
                 labelText: 'Full Name',
+                labelStyle: const TextStyle(
+                  fontFamily:
+                      'Montserrat-Italic', // Apply Montserrat-Italic font
+                ),
                 prefixIcon: const Icon(Icons.person),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8.0),
@@ -37,6 +51,10 @@ class RegisterPageView extends StatelessWidget {
             TextField(
               decoration: InputDecoration(
                 labelText: 'Email',
+                labelStyle: const TextStyle(
+                  fontFamily:
+                      'Montserrat-Italic', // Apply Montserrat-Italic font
+                ),
                 prefixIcon: const Icon(Icons.email),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8.0),
@@ -48,6 +66,10 @@ class RegisterPageView extends StatelessWidget {
             TextField(
               decoration: InputDecoration(
                 labelText: 'Password',
+                labelStyle: const TextStyle(
+                  fontFamily:
+                      'Montserrat-Italic', // Apply Montserrat-Italic font
+                ),
                 prefixIcon: const Icon(Icons.lock),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8.0),
@@ -59,6 +81,10 @@ class RegisterPageView extends StatelessWidget {
             TextField(
               decoration: InputDecoration(
                 labelText: 'Confirm Password',
+                labelStyle: const TextStyle(
+                  fontFamily:
+                      'Montserrat-Italic', // Apply Montserrat-Italic font
+                ),
                 prefixIcon: const Icon(Icons.lock_outline),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8.0),
@@ -69,10 +95,10 @@ class RegisterPageView extends StatelessWidget {
             const SizedBox(height: 30),
             ElevatedButton(
               onPressed: () {
-                // Handle registration action
-                Navigator.push(
+                // Navigate to HomePageView
+                Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => const MainPage()),
+                  MaterialPageRoute(builder: (context) => const HomePageView()),
                 );
               },
               style: ElevatedButton.styleFrom(
@@ -87,57 +113,30 @@ class RegisterPageView extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
+                  fontFamily: 'Montserrat-Bold', // Apply Montserrat-Bold font
                   color: Colors.white,
                 ),
               ),
             ),
             const SizedBox(height: 15),
-            ElevatedButton(
+            TextButton(
               onPressed: () {
-                // Navigate to Login Page
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) => const LoginPageView()),
                 );
               },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color.fromARGB(255, 143, 85, 22),
-                padding: const EdgeInsets.symmetric(vertical: 15),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-              ),
               child: const Text(
-                'Login',
+                'Already have an account? Login',
                 style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  fontFamily:
+                      'Montserrat-Italic', // Apply Montserrat-Italic font
+                  color: Color.fromARGB(255, 193, 127, 29),
                 ),
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-// MainPage for navigation
-class MainPage extends StatelessWidget {
-  const MainPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Gemsera - Earring Store'),
-      ),
-      body: const Center(
-        child: Text(
-          'Welcome to Gemsera! Browse your favorite earrings here.',
-          style: TextStyle(fontSize: 18),
         ),
       ),
     );
